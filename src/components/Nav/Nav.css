@@ -14,7 +14,9 @@
     text-decoration: none;
     color: white;
 }
-
+.menuItem a.active{
+    color: lightgreen;
+}
 .menuItem a:hover {
     color: lightgreen;
 }
