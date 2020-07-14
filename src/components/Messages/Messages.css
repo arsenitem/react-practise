@@ -1,0 +1,26 @@
+.dialogs-main {
+    grid-template-areas: "d m";
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.dialogs {
+    grid-area: d;
+    border-right: 3px solid black;
+}
+.dialog-items {
+
+}
+.dialog a{
+    text-decoration: none;
+    color: black;
+}
+.dialog a.active{
+    color:lightseagreen;
+}
+.messages {
+    grid-area: m;
+    margin-left: 20px;
+}
+.message {
+
+}
