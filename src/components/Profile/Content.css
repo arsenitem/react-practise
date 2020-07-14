@@ -1,0 +1,23 @@
+.content {
+    color: black;
+    grid-area: c;
+    font-size: 27px;
+  }
+#topimg {
+    width: 100%;
+    height: 100%;
+}
+#avatar {
+    float: left;
+    margin-right: 30px;
+}
+.avatarDescription {
+    margin-top: 10px;
+}
+#postslabel {
+    font-weight: 600;
+}
+.posts {
+    width: 80%;
+    margin-left: 40px;
+}
