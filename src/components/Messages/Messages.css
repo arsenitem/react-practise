@@ -7,15 +7,25 @@
     grid-area: d;
     border-right: 3px solid black;
 }
-.dialog-items {
+.dialog-items img{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    float: left;
+}
 
+.dialog {
+    margin-bottom: 25px;
+    height: 100px;
 }
 .dialog a{
+    top:30%;
+    position: relative;
     text-decoration: none;
     color: black;
 }
 .dialog a.active{
-    color:lightseagreen;
+    font-weight: 700;
 }
 .messages {
     grid-area: m;
@@ -23,4 +33,32 @@
 }
 .message {
 
+}
+.msg{
+    height: 200px;
+    width: 350px;
+    border-radius: 7%;
+}
+.msg-text {
+    font-size: 24px;
+    font-weight: lighter;
+    padding: 15px;
+}
+.msg-info {
+    font-size: 16px;
+    padding: 10px;
+    padding-top: 110px;
+}
+.msg.left{
+    margin-left: 0;
+    margin-right: auto;
+    background-color:#abd6cf;
+}
+.msg.right{
+    margin-left: auto;
+    margin-right: 0;
+    background-color: #fde7da;
+}
+.msg-input {
+    margin-bottom: 20px;
 }
