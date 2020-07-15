@@ -2,12 +2,6 @@ import React from 'react';
 import './Messages.css';
 import {NavLink} from 'react-router-dom';
 
-let dialogsData = [{id: "1", name: "Den"},{id: "2", name: "Sano"},{id: "3", name: "Egor"},{id: "4", name: "Mashs"}];
-
-let messagesData = [{message: "Ola", datetime:"25.06.2020 18:36", position:"left"},
-    {message: "Ola bro", datetime:"25.06.2020 18:36", position:"right"},
-    {message: "Hows ya doings", datetime:"25.06.2020 18:36", position:"left"}];
-
 function DialogItem(props) {
     return (
         <div>
@@ -35,11 +29,11 @@ function Message(props) {
     );
 }
 function Messages(props) {
-    let dialogElements =  dialogsData.map((item) => {
+    let dialogElements =  props.dialogsData.map((item) => {
         return <DialogItem id={item.id} name={item.name}/>
     });
 
-    let messageElements = messagesData.map(item => <Message message={item.message} datetime={item.datetime} position ={item.position}/>)
+    let messageElements = props.messagesData.map(item => <Message message={item.message} datetime={item.datetime} position ={item.position}/>)
    
     return (
         <div className="dialogs-main">

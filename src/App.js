@@ -9,7 +9,9 @@ import Music from './components/Music/Music'
 import {Route, BrowserRouter} from 'react-router-dom';
 import './App.css';
 
-function App() {
+function App(props) {
+  // let dialogsData = props.dialogsData;
+  console.log(props.dialogsData)
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -17,9 +19,12 @@ function App() {
         <Nav/>       
         <div className="content">
           <Route component={Content} path="/profile"/>
-          <Route component={Messages} path="/messages"/>
+          <Route path="/messages">
+            <Messages dialogsData={props.dialogsData} messagesData = {props.messagesData}/>
+          </Route>
           <Route component={News} path="/news"/>
           <Route component={Music} path="/music"/>
+         
         </div>    
       </div>
     </BrowserRouter>
