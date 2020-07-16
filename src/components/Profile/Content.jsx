@@ -3,7 +3,7 @@ import './Content.css';
 import NewPost from './NewPost'
 import PostsGroup from './PostsGroup'
 import ProfileInfo from './ProfileInfo';
-function Content() {
+function Content(props) {
     return(
         <div>
         <div>
@@ -15,8 +15,8 @@ function Content() {
         </div>
         <div className="posts">
         <h4 id ="postslabel">My posts</h4>
-          <NewPost/>
-          <PostsGroup/>
+          <NewPost addPost = {props.addPost} updateText = {props.updateText} newPostText = {props.newPostText}/>
+          <PostsGroup postsData = {props.postsData}/>
         </div>
       </div>
     );

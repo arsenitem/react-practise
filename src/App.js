@@ -10,17 +10,17 @@ import {Route, BrowserRouter} from 'react-router-dom';
 import './App.css';
 
 function App(props) {
-  // let dialogsData = props.dialogsData;
-  console.log(props.dialogsData)
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header/>
         <Nav/>       
         <div className="content">
-          <Route component={Content} path="/profile"/>
+          <Route path="/profile">
+            <Content postsData = {props.appState.posts} addPost = {props.addPost} updateText = {props.updateText} newPostText = {props.appState.newPostText}/>
+          </Route>
           <Route path="/messages">
-            <Messages dialogsData={props.dialogsData} messagesData = {props.messagesData}/>
+            <Messages dialogsData={props.appState.dialogs} messagesData = {props.appState.messages}/>
           </Route>
           <Route component={News} path="/news"/>
           <Route component={Music} path="/music"/>

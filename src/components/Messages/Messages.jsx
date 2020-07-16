@@ -35,6 +35,11 @@ function Messages(props) {
 
     let messageElements = props.messagesData.map(item => <Message message={item.message} datetime={item.datetime} position ={item.position}/>)
    
+    let msg = React.createRef();
+    let newMessage = function() {
+        
+        alert(msg.current.value)
+    }
     return (
         <div className="dialogs-main">
             <div className="dialogs">
@@ -43,10 +48,10 @@ function Messages(props) {
                 </div>
             </div>
             <div className="messages">
-                <div class="msg-input">
-                   <textarea placeholder="new message"></textarea>
+                <div className="msg-input">
+                   <textarea placeholder="new message" ref={msg}></textarea>
                 </div>
-                <button className="btn right">Send</button>
+                <button className="btn right" onClick={newMessage}>Send</button>
      
                 {messageElements}
             </div>
