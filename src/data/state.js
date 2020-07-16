@@ -1,38 +1,53 @@
-import render from './render';
+let store = {
+    _state: {
+        dialogs:[{id: "1", name: "Den"},{id: "2", name: "Sano"},{id: "3", name: "Egor"},{id: "4", name: "Mashs"}],
 
-let dialogData = [{id: "1", name: "Den"},{id: "2", name: "Sano"},{id: "3", name: "Egor"},{id: "4", name: "Mashs"}];
+        messages:[{message: "Ola", datetime:"25.06.2020 18:36", position:"left"},
+                {message: "Ola bro", datetime:"25.06.2020 18:36", position:"right"},
+                {message: "Hows ya doings", datetime:"25.06.2020 18:36", position:"left"}],
+        
+        posts: [{message:"My first post",likes:"4", comments:"5"},
+                {message:"My second post",likes:"2", comments:"3"},
+                {message:"Developing...",likes:"11", comments:"7"} ],
+        newPostText: "",
+        newMessageText: "",
+    },
 
-let messageData = [{message: "Ola", datetime:"25.06.2020 18:36", position:"left"},
-                  {message: "Ola bro", datetime:"25.06.2020 18:36", position:"right"},
-                  {message: "Hows ya doings", datetime:"25.06.2020 18:36", position:"left"}
-                  ];
+    getState() {
+        return this._state;
+    },
 
-let postData = [{message:"My first post",likes:"4", comments:"5"},
-                  {message:"My second post",likes:"2", comments:"3"},
-                  {message:"Developing...",likes:"11", comments:"7"}
-                ];
-let state = {
-    dialogs: dialogData,
-    messages: messageData,
-    posts: postData,
-    newPostText: "",
+    createNewPost() {
+        let newPost = {message:this._state.newPostText,likes:"0", comments:"0"};
+        this._state.posts.unshift(newPost); 
+        this._state.newPostText = "";
+        this.rerenderTree();
+    },
+
+    createNewMessage() {
+        let newMessage = {message:this._state.newMessageText,datetime: new Date().toLocaleString(), position:"left"};
+        this._state.messages.unshift(newMessage); 
+        this._state.newMessageText = "";
+        this.rerenderTree();
+    },
+
+    updateTextAreaMessage(newText) {
+        this._state.newMessageText = newText;
+        this.rerenderTree();
+    },
+
+    updateTextArea(newText) {
+        this._state.newPostText = newText;
+        this.rerenderTree();
+    },
+
+    renderTree() {
+        console.log("state changed");
+    },
+    
+    initRerender(renderFunc) {
+        this.rerenderTree = renderFunc;
+    }
 }
 
-let rerenderTree = function() {
-    console.log("state changed");
-}
-export let initRerender = function(renderFunc) {
-    rerenderTree = renderFunc;
-}
-
-export let createNewPost = function(){
-    let newPost = {message:state.newPostText,likes:"0", comments:"0"};
-    state.posts.unshift(newPost); 
-    state.newPostText = "";
-    rerenderTree();
-}
-export let updateTextArea = function (newText) {
-    state.newPostText = newText;
-    rerenderTree();
-}
-export default state;
+export default store;

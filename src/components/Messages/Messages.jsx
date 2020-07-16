@@ -1,7 +1,7 @@
 import React from 'react';
 import './Messages.css';
 import {NavLink} from 'react-router-dom';
-
+import {CSSTransition} from 'react-transition-group';
 function DialogItem(props) {
     return (
         <div>
@@ -16,29 +16,48 @@ function DialogItem(props) {
 
 function Message(props) {
     return(
-        <div className="message">
-            <div class={"msg " + props.position}>
-                <div className="msg-text">
-                    {props.message}
-                </div>
-                <div className="msg-info">
-                    {props.datetime}
+            <div className="message">
+                <div className={"msg " + props.position}>
+                    <div className="msg-text">
+                        {props.message}
+                    </div>
+                    <div className="msg-info">
+                        {props.datetime}
+                    </div>
                 </div>
             </div>
-        </div>
     );
 }
+let newElem = false;
 function Messages(props) {
-    let dialogElements =  props.dialogsData.map((item) => {
+    let dialogElements =  props.store.getState().dialogs.map((item) => {
         return <DialogItem id={item.id} name={item.name}/>
     });
 
-    let messageElements = props.messagesData.map(item => <Message message={item.message} datetime={item.datetime} position ={item.position}/>)
+    let messageElements = props.store.getState().messages.map( (item, index) => {
+        if (index == 0) {
+            return (<CSSTransition timeout={300} classNames="animated" in ={newElem}>
+                <Message message={item.message} datetime={item.datetime} position ={item.position}/>     
+            </CSSTransition>)
+           
+        } else {
+            return <Message message={item.message} datetime={item.datetime} position ={item.position}/>    
+        }
+        
+    });
+       
    
     let msg = React.createRef();
     let newMessage = function() {
-        
-        alert(msg.current.value)
+        props.store.createNewMessage(props.store.getState().newMessageText);
+        newElem = true;
+        setTimeout(() => {
+            newElem = false;
+        },1000);
+    }
+
+    let changeMsgText = function() {
+        props.store.updateTextAreaMessage(msg.current.value);
     }
     return (
         <div className="dialogs-main">
@@ -49,7 +68,9 @@ function Messages(props) {
             </div>
             <div className="messages">
                 <div className="msg-input">
-                   <textarea placeholder="new message" ref={msg}></textarea>
+                   <textarea placeholder="new message" ref={msg} value = {props.store.getState().newMessageText} onChange={changeMsgText}>
+
+                   </textarea>
                 </div>
                 <button className="btn right" onClick={newMessage}>Send</button>
      

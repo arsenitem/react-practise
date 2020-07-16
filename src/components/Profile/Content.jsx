@@ -15,8 +15,8 @@ function Content(props) {
         </div>
         <div className="posts">
         <h4 id ="postslabel">My posts</h4>
-          <NewPost addPost = {props.addPost} updateText = {props.updateText} newPostText = {props.newPostText}/>
-          <PostsGroup postsData = {props.postsData}/>
+          <NewPost store = {props.store}/>
+          <PostsGroup store = {props.store}/>
         </div>
       </div>
     );

@@ -4,14 +4,14 @@ import './NewPost.css';
 function NewPost(props) {
     let newPost = React.createRef();
     let test = function() {
-        props.addPost(props.NewPostText);
+        props.store.createNewPost(props.store.getState().NewPostText);
     }
     let changeText = function() {
-        props.updateText(newPost.current.value);
+        props.store.updateTextArea(newPost.current.value);
     }
     return(
         <div>
-            <textarea placeholder="your news..." ref={newPost} value = {props.newPostText} onChange={changeText}>
+            <textarea placeholder="your news..." ref={newPost} value = {props.store.getState().newPostText} onChange={changeText}>
             </textarea>   
             <button className="btn right" onClick={test}>Send</button>           
           </div>

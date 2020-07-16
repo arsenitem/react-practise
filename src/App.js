@@ -17,10 +17,10 @@ function App(props) {
         <Nav/>       
         <div className="content">
           <Route path="/profile">
-            <Content postsData = {props.appState.posts} addPost = {props.addPost} updateText = {props.updateText} newPostText = {props.appState.newPostText}/>
+            <Content store = {props.store}/>
           </Route>
           <Route path="/messages">
-            <Messages dialogsData={props.appState.dialogs} messagesData = {props.appState.messages}/>
+            <Messages store = {props.store}/>
           </Route>
           <Route component={News} path="/news"/>
           <Route component={Music} path="/music"/>
