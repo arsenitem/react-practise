@@ -2,16 +2,17 @@ import React from 'react';
 import './NewPost.css';
 
 function NewPost(props) {
-    let newPost = React.createRef();
+    //let newPost = React.createRef();
     let test = function() {
-        props.store.createNewPost(props.store.getState().NewPostText);
+        props.store.dispatch({type:"CREATE-NEW-POST"});
     }
-    let changeText = function() {
-        props.store.updateTextArea(newPost.current.value);
+    let changeText = function(e) {
+        props.store.dispatch({type:"UPDATE-NEW-POST-TEXT", newText:e.target.value});
+        //props.store.updateTextArea(newPost.current.value);
     }
     return(
         <div>
-            <textarea placeholder="your news..." ref={newPost} value = {props.store.getState().newPostText} onChange={changeText}>
+            <textarea placeholder="your news..." value = {props.store.getState().profilePage.newPostText} onChange={changeText}>
             </textarea>   
             <button className="btn right" onClick={test}>Send</button>           
           </div>

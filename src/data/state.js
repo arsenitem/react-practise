@@ -1,3 +1,6 @@
+import {profileReducer} from './profileReducer';
+import {dialogsReducer} from './dialogsReducer';
+
 let store = {
     _state: {
         dialogs:[{id: "1", name: "Den"},{id: "2", name: "Sano"},{id: "3", name: "Egor"},{id: "4", name: "Mashs"}],
@@ -17,28 +20,10 @@ let store = {
         return this._state;
     },
 
-    createNewPost() {
-        let newPost = {message:this._state.newPostText,likes:"0", comments:"0"};
-        this._state.posts.unshift(newPost); 
-        this._state.newPostText = "";
-        this.rerenderTree();
-    },
-
-    createNewMessage() {
-        let newMessage = {message:this._state.newMessageText,datetime: new Date().toLocaleString(), position:"left"};
-        this._state.messages.unshift(newMessage); 
-        this._state.newMessageText = "";
-        this.rerenderTree();
-    },
-
-    updateTextAreaMessage(newText) {
-        this._state.newMessageText = newText;
-        this.rerenderTree();
-    },
-
-    updateTextArea(newText) {
-        this._state.newPostText = newText;
-        this.rerenderTree();
+    dispatch(action) {
+        this._state = profileReducer(this._state, action);
+        this._state = dialogsReducer(this._state, action);
+        this.renderTree();
     },
 
     renderTree() {
@@ -46,7 +31,7 @@ let store = {
     },
     
     initRerender(renderFunc) {
-        this.rerenderTree = renderFunc;
+        this.renderTree = renderFunc;
     }
 }
 
