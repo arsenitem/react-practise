@@ -11,6 +11,9 @@ function Nav() {
           <NavLink to="/messages">Messages</NavLink>         
         </div>
         <div className="menuItem">
+          <NavLink to="/users">Users</NavLink>         
+        </div>
+        <div className="menuItem">
           <NavLink to="/news">News</NavLink>
         </div>
         <div className="menuItem">

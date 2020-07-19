@@ -1,0 +1,40 @@
+.userItem {
+    margin:0 auto;
+    width: 70%;
+    height: 125px;
+    margin-bottom: 40px;
+}
+.userItem .userInfo {
+    padding: 10px;
+    height: 100%;
+    border:2px solid black;
+    border-radius: 10px;
+    display: grid;
+    grid-template-areas: "fio fio"
+    "st ct";
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 3fr 2fr;
+
+}
+.userItem .userAvatar {
+    text-align: center;
+    margin-right: 20px;
+    height: 100%;
+    width: 20%;
+    float: left;
+}
+.userItem img {
+    border-radius: 50%;
+    height: 76%;
+}
+.userItem .userFio {
+    grid-area: fio;
+}
+.userItem .userStatus {
+    grid-area: st;
+}
+.userItem .userCity {
+    margin-right: 0;
+    margin-left: auto;
+    grid-area: ct;
+}

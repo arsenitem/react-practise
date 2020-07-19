@@ -8,19 +8,29 @@ let initialState = {
     newElem:false
 }
 let dialogsReducer = function(state = initialState, action) {
-    let stateCopy = {...state}
+    let stateCopy;
     switch(action.type) {
         case "CREATE-NEW-MESSAGE":
             let newMessage = {message:state.newMessageText,datetime: new Date().toLocaleString(), position:"left"};
-            stateCopy.messages.unshift(newMessage); 
-            stateCopy.newMessageText = "";
-            stateCopy.newElem = true;
+            stateCopy = {
+                ...state,
+                messages: [newMessage,...state.messages],
+                newMessageText: "",
+                newElem: true,
+            }
+            // stateCopy.messages.unshift(newMessage); 
+            // stateCopy.newMessageText = "";
+            // stateCopy.newElem = true;
             setTimeout(()=> {
                 stateCopy.newElem = false;
             }, 1000);
         break;
         case "UPDATE-NEW-MESSAGE-TEXT":
-            stateCopy.newMessageText = action.newText;
+            stateCopy = {
+                ...state,
+                newMessageText: action.newText
+            };
+            //stateCopy.newMessageText = action.newText;
         break;
         default: return state;
     }
