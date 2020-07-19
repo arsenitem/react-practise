@@ -28,15 +28,15 @@ function Message(props) {
             </div>
     );
 }
-let newElem = false;
+
 function Messages(props) {
-    let dialogElements =  props.store.getState().dialogsPage.dialogs.map((item) => {
+    let dialogElements =  props.dialogs.map((item) => {
         return <DialogItem id={item.id} name={item.name}/>
     });
 
-    let messageElements = props.store.getState().dialogsPage.messages.map( (item, index) => {
+    let messageElements = props.messages.map( (item, index) => {
         if (index == 0) {
-            return (<CSSTransition timeout={300} classNames="animated" in ={newElem}>
+            return (<CSSTransition timeout={300} classNames="animated" in ={props.newElem}>
                 <Message message={item.message} datetime={item.datetime} position ={item.position}/>     
             </CSSTransition>)
            
@@ -46,17 +46,6 @@ function Messages(props) {
         
     });
        
-    let newMessage = function() {
-        props.store.dispatch({type:"CREATE-NEW-MESSAGE"});
-        newElem = true;
-        setTimeout(() => {
-            newElem = false;
-        },1000);
-    }
-
-    let changeMsgText = function(e) {
-        props.store.dispatch({type:"UPDATE-NEW-MESSAGE-TEXT", newText:e.target.value});
-    }
     return (
         <div className="dialogs-main">
             <div className="dialogs">
@@ -66,11 +55,11 @@ function Messages(props) {
             </div>
             <div className="messages">
                 <div className="msg-input">
-                   <textarea placeholder="new message" value = {props.store.getState().dialogsPage.newMessageText} onChange={changeMsgText}>
+                   <textarea placeholder="new message" value = {props.newMessageText} onChange={props.changeMsgText}>
 
                    </textarea>
                 </div>
-                <button className="btn right" onClick={newMessage}>Send</button>
+                <button className="btn right" onClick={props.newMessage}>Send</button>
      
                 {messageElements}
             </div>

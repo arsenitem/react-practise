@@ -3,6 +3,8 @@ import './Content.css';
 import NewPost from './NewPost'
 import PostsGroup from './PostsGroup'
 import ProfileInfo from './ProfileInfo';
+import NewPostContainer from './NewPostContainer';
+import PostsGroupContainer from './PostsGroupContainer';
 function Content(props) {
     return(
         <div>
@@ -15,8 +17,10 @@ function Content(props) {
         </div>
         <div className="posts">
         <h4 id ="postslabel">My posts</h4>
-          <NewPost store = {props.store}/>
-          <PostsGroup store = {props.store}/>
+          <NewPostContainer/>
+          <PostsGroupContainer/>
+          {/* <NewPost store = {props.store}/> */}
+          {/* <PostsGroup store = {props.store}/> */}
         </div>
       </div>
     );

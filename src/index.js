@@ -5,23 +5,27 @@ import App from './App';
 import ReactDOM from 'react-dom';
 //import store from './data/state';
 import  store  from './data/store.js';
+import { Provider } from 'react-redux';
 
-function reRenderDom(storeVal) {
+
   ReactDOM.render(
     <React.StrictMode>
-      <App store = {storeVal}/>
+      <Provider store ={store}>
+        <App />
+      </Provider>
+      
     </React.StrictMode>,
     document.getElementById('root')
   );
-}
 
-reRenderDom(store);
+
+// reRenderDom(store);
 
 // store.initRerender(reRenderDom);
 
-store.subscribe(() => {
-  reRenderDom(store)
-});
+// store.subscribe(() => {
+//   reRenderDom(store)
+// });
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

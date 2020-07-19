@@ -8,6 +8,7 @@ import News from './components/News/News'
 import Music from './components/Music/Music'
 import {Route, BrowserRouter} from 'react-router-dom';
 import './App.css';
+import MessagesContainer from './components/Messages/MessagesContainer';
 
 function App(props) {
   return (
@@ -17,10 +18,10 @@ function App(props) {
         <Nav/>       
         <div className="content">
           <Route path="/profile">
-            <Content store = {props.store}/>
+            <Content/>
           </Route>
           <Route path="/messages">
-            <Messages store = {props.store}/>
+            <MessagesContainer/>
           </Route>
           <Route component={News} path="/news"/>
           <Route component={Music} path="/music"/>

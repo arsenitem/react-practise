@@ -6,17 +6,21 @@ let initialState = {
 }
 
 let profileReducer = function(state = initialState, action) {
+    let stateCopy = {
+        ...state,
+        posts: [...state.posts]
+    };
     switch(action.type) {
         case "CREATE-NEW-POST":
             let newPost = {message:state.newPostText,likes:"0", comments:"0"};
-            state.posts.unshift(newPost); 
-            state.newPostText = "";           
+            stateCopy.posts.unshift(newPost); 
+            stateCopy.newPostText = "";           
             break;
         case "UPDATE-NEW-POST-TEXT":
-            state.newPostText = action.newText;
+            stateCopy.newPostText = action.newText;
             break;
         default: return state;
     }
-    return state;
+    return stateCopy;
 }
 export default profileReducer;
