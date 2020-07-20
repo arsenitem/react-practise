@@ -3,7 +3,9 @@ import Users from './Users'
 
 let mapStateToProps = function(state) {
     return {
-        users: state.usersPage.users
+        users: state.usersPage.users,
+        currentPage: state.usersPage.currentPage,
+        totalPages: state.usersPage.totalPages
     }
 };
 let mapDispatchToProps = function(dispatch) {
@@ -12,8 +14,12 @@ let mapDispatchToProps = function(dispatch) {
             dispatch({type:"FOLLOW", userId: id});
         },
 
-        getUsers: (users) => {
-            dispatch({type:"GET-USERS", users: users});
+        getUsers: (users, totalPages) => {
+            dispatch({type:"GET-USERS", users: users, totalPages: totalPages});
+        },
+
+        changeCurrentPage: (currentPage) => {
+            dispatch({type:"CHANGE-CURRENT-PAGE", currentPage: currentPage});
         }
        
     }

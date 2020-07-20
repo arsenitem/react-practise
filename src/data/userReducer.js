@@ -1,8 +1,11 @@
+import axios from 'axios'
 let initialState = {
     users: [
         // {userId:1,fio:"Vasiliy D.", status:"looking for food...", city:"Russia, Perm", following: false},
         // {userId:2,fio:"Ivan A.", status:"reacr cool", city: "Russia, Perm", following: true},
-    ]
+    ],
+    currentPage:1,
+    totalPages:1
 }
 
 let usersReducer = function(state = initialState, action) {
@@ -25,11 +28,25 @@ let usersReducer = function(state = initialState, action) {
             }
             return stateCopy;
         case "GET-USERS":
+            // axios.get(`http://localhost:3001/users?page=${state.currentPage}`).then((users) => {
+            //     stateCopy = {
+            //         ...state,
+            //         users:users.data.users,
+            //         totalPages: users.data.pages
+            //     };
+            //     return stateCopy;
+            // });  
             stateCopy = {
                 ...state,
-                users:action.users
+                users:action.users,
+                totalPages: action.totalPages
             };
-            debugger;
+            return stateCopy;
+        case "CHANGE-CURRENT-PAGE":
+            stateCopy = {
+                ...state,
+                currentPage: action.currentPage
+            };
             return stateCopy;
         default: return state;
     }

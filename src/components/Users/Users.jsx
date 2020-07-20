@@ -27,28 +27,46 @@ function UserItem(props) {
 class Users extends React.Component {
     constructor(props) {
         super(props);
-        this.getUsers();
+        
     }
     getUsers = () => {
-        if (this.props.users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users").then((users) => {
-                this.props.getUsers(users.data.items);      
-            });
-        }
-    }
+        axios.get(`http://localhost:3001/users?page=${this.props.currentPage}`).then((users) => {
+            this.props.getUsers(users.data.users, users.data.pages);
+        });      
+    };
+
     userItems = this.props.users.map(item => 
         <UserItem name ={item.name} status= {item.status} city={item.city} followed={item.followed} userId = {item.id} followUser={this.props.followUser}/>
     );
 
+    pageClick = (item) => {
+        this.props.changeCurrentPage(item);
+        axios.get(`http://localhost:3001/users?page=${item}`).then((users) => {
+            this.props.getUsers(users.data.users, users.data.pages);
+        });
+    }
+        
+    componentDidMount() {
+        this.getUsers();
+    };
     render() {
+        let pages = []
+        for(let i=1; i<=this.props.totalPages;i++) {
+            pages.push(i);
+        }
         return(
             <div>
+                <div className="pagination">
+                   {pages.map(item => {
+                       return <span onClick={() => this.pageClick(item)} className={this.props.currentPage === item && "active-page"}>{item}</span>
+                   })}
+                </div>
                 {this.props.users.map(item => {
                     return <UserItem name ={item.name} status= {item.status} city={item.city} followed={item.followed} userId = {item.id} followUser={this.props.followUser}/>
                 })}
             </div>
         )
-    }
+    };
 }
 
 export default Users;
