@@ -36,4 +36,8 @@ let dialogsReducer = function(state = initialState, action) {
     }
     return stateCopy;
 }
+
+export const createNewMessage = () => ({type:"CREATE-NEW-MESSAGE"});
+export const updateNewMessageText = (newText) => ({type:"UPDATE-NEW-MESSAGE-TEXT", newText});
+
 export default dialogsReducer;

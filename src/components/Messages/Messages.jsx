@@ -55,11 +55,11 @@ function Messages(props) {
             </div>
             <div className="messages">
                 <div className="msg-input">
-                   <textarea placeholder="new message" value = {props.newMessageText} onChange={props.changeMsgText}>
+                   <textarea placeholder="new message" value = {props.newMessageText} onChange={(e) => {props.updateNewMessageText(e.target.value)}}>
 
                    </textarea>
                 </div>
-                <button className="btn right" onClick={props.newMessage}>Send</button>
+                <button className="btn right" onClick={props.createNewMessage}>Send</button>
      
                 {messageElements}
             </div>

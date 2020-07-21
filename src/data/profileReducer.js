@@ -16,7 +16,8 @@ let profileReducer = function(state = initialState, action) {
                 newPostText: ""
             };
             // stateCopy.posts.unshift(newPost); 
-            // stateCopy.newPostText = "";           
+            // stateCopy.newPostText = "";  
+            return stateCopy;         
             break;
         case "UPDATE-NEW-POST-TEXT":
             stateCopy = {
@@ -24,9 +25,13 @@ let profileReducer = function(state = initialState, action) {
                 newPostText: action.newText
             };
             // stateCopy.newPostText = action.newText;
+            debugger
+            return stateCopy;
             break;
         default: return state;
     }
-    return stateCopy;
 }
+
+export const createNewPost = () => ({type:"CREATE-NEW-POST"});
+export const updateNewPostText = (newText) => ({type:"UPDATE-NEW-POST-TEXT", newText});
 export default profileReducer;
