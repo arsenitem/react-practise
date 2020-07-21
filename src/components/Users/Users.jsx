@@ -2,14 +2,19 @@ import React from 'react'
 import './Users.css'
 import axios from 'axios'
 import loader from './../../assets/loader.svg'
+import { NavLink } from 'react-router-dom'
+import userIcon from './../../assets/userIcon.jpg';
 function UserItem(props) {
     let buttonText = props.followed == true ? "Unfollow" : "Follow"
     return (
         <div className="userItem">
             <div className="userAvatar">
-                <img src="https://pm1.narvii.com/6889/74979d4d2744ec6e27995b6e866f091d04c0b40cr1-515-414v2_uhq.jpg">
-                </img>
-                <button className="btn" onClick={() =>{props.followUser(props.userId)}}>{buttonText}</button>
+                <NavLink to={`/profile/${props.id}`}>
+                    <img src={props.photos.small ? props.photos.small : userIcon} >
+                    </img>
+                </NavLink>
+               
+                <button className="btn" onClick={() =>{props.followUser(props.id)}}>{buttonText}</button>
             </div>
             <div className="userInfo">
                 <div className="userFio">
@@ -77,7 +82,7 @@ class Users extends React.Component {
                     })}
                     </div>
                     {this.props.users.map(item => {
-                        return <UserItem name ={item.name} status= {item.status} city={item.city} followed={item.followed} userId = {item.id} followUser={this.props.followUser}/>
+                        return <UserItem {...item} followUser={this.props.followUser}/>
                     })}
                 </div>}
                

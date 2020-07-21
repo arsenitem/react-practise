@@ -18,7 +18,7 @@ function App(props) {
         <Header/>
         <Nav/>       
         <div className="content">
-          <Route path="/profile">
+          <Route path="/profile/:userId">
             <Content/>
           </Route>
           <Route path="/messages">

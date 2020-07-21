@@ -3,6 +3,7 @@ let initialState = {
                 {message:"My second post",likes:"2", comments:"3"},
                 {message:"Developing...",likes:"11", comments:"7"} ],
     newPostText: "",
+    profile:null,
 }
 
 let profileReducer = function(state = initialState, action) {
@@ -18,20 +19,24 @@ let profileReducer = function(state = initialState, action) {
             // stateCopy.posts.unshift(newPost); 
             // stateCopy.newPostText = "";  
             return stateCopy;         
-            break;
         case "UPDATE-NEW-POST-TEXT":
             stateCopy = {
                 ...state,
                 newPostText: action.newText
             };
             // stateCopy.newPostText = action.newText;
-            debugger
             return stateCopy;
-            break;
+        case "UPDATE-PROFILE-INFO": 
+            stateCopy = {
+                ...state,
+                profile: action.profile
+            };
+            return stateCopy;
         default: return state;
     }
 }
 
 export const createNewPost = () => ({type:"CREATE-NEW-POST"});
 export const updateNewPostText = (newText) => ({type:"UPDATE-NEW-POST-TEXT", newText});
+export const updateProfileInfo = (profile) => ({type:"UPDATE-PROFILE-INFO", profile});
 export default profileReducer;

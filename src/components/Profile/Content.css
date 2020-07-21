@@ -5,9 +5,20 @@
 #avatar {
     float: left;
     margin-right: 30px;
+    border-radius: 50%;
+    width: 350px;
 }
 .avatarDescription {
     margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "av decs"
+}
+.av {
+    grid-area: av;
+}
+.desc {
+    grid-area: decs;
 }
 #postslabel {
     font-weight: 600;

@@ -7,8 +7,7 @@ function Loader(props) {
                 props.isFetching ? 
                 <div className="loader">
                     <img src={loader}/>
-                </div> :   
-                props.content
+                </div> : null
             }
         </div>
        
