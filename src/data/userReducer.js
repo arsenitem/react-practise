@@ -1,11 +1,8 @@
-import axios from 'axios'
 let initialState = {
-    users: [
-        // {userId:1,fio:"Vasiliy D.", status:"looking for food...", city:"Russia, Perm", following: false},
-        // {userId:2,fio:"Ivan A.", status:"reacr cool", city: "Russia, Perm", following: true},
-    ],
+    users: [],
     currentPage:1,
-    totalPages:1
+    totalPages:1,
+    isFetching: false
 }
 
 let usersReducer = function(state = initialState, action) {
@@ -28,14 +25,6 @@ let usersReducer = function(state = initialState, action) {
             }
             return stateCopy;
         case "GET-USERS":
-            // axios.get(`http://localhost:3001/users?page=${state.currentPage}`).then((users) => {
-            //     stateCopy = {
-            //         ...state,
-            //         users:users.data.users,
-            //         totalPages: users.data.pages
-            //     };
-            //     return stateCopy;
-            // });  
             stateCopy = {
                 ...state,
                 users:action.users,
@@ -48,7 +37,19 @@ let usersReducer = function(state = initialState, action) {
                 currentPage: action.currentPage
             };
             return stateCopy;
+        case "TOGGLE-LOADER": 
+            stateCopy = {
+                ...state,
+                isFetching : !state.isFetching
+            };
+            return stateCopy;
         default: return state;
     }
 }
+
+export const followUser =(userId) => ({type:"FOLLOW",userId });
+export const getUsers = (users,totalPages) => ({type:"GET-USERS", users, totalPages});
+export const changeCurrentPage = (currentPage) => ({type: "CHANGE-CURRENT-PAGE", currentPage});
+export const toggleLoader = () => ({type: "TOGGLE-LOADER"});
+
 export default usersReducer;

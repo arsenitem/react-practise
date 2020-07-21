@@ -52,3 +52,6 @@
 .active-page {
     font-weight: bold;
 }
+.loader{
+    text-align: center;
+}

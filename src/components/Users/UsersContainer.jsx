@@ -1,29 +1,16 @@
 import { connect } from 'react-redux'
 import Users from './Users'
-
+import {followUser, getUsers, changeCurrentPage,toggleLoader} from './../../data/userReducer'
 let mapStateToProps = function(state) {
     return {
         users: state.usersPage.users,
         currentPage: state.usersPage.currentPage,
-        totalPages: state.usersPage.totalPages
+        totalPages: state.usersPage.totalPages,
+        isFetching: state.usersPage.isFetching,
     }
 };
-let mapDispatchToProps = function(dispatch) {
-    return {
-        followUser: (id) => {
-            dispatch({type:"FOLLOW", userId: id});
-        },
+let actions = {followUser,getUsers,changeCurrentPage,toggleLoader}
 
-        getUsers: (users, totalPages) => {
-            dispatch({type:"GET-USERS", users: users, totalPages: totalPages});
-        },
-
-        changeCurrentPage: (currentPage) => {
-            dispatch({type:"CHANGE-CURRENT-PAGE", currentPage: currentPage});
-        }
-       
-    }
-}
-let UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+let UsersContainer = connect(mapStateToProps, actions)(Users);
 
 export default UsersContainer

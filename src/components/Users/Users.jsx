@@ -1,6 +1,7 @@
 import React from 'react'
 import './Users.css'
 import axios from 'axios'
+import loader from './../../assets/loader.svg'
 function UserItem(props) {
     let buttonText = props.followed == true ? "Unfollow" : "Follow"
     return (
@@ -30,19 +31,27 @@ class Users extends React.Component {
         
     }
     getUsers = () => {
-        axios.get(`http://localhost:3001/users?page=${this.props.currentPage}`).then((users) => {
-            this.props.getUsers(users.data.users, users.data.pages);
-        });      
+        // axios.get(`http://localhost:3001/users?page=${this.props.currentPage}`).then((users) => {
+        //     this.props.getUsers(users.data.users, users.data.pages);
+        // });  
+        this.props.toggleLoader();   
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`).then((users) => {
+            let pages = Math.ceil(users.data.totalCount / 1000)
+            this.props.getUsers(users.data.items, pages);
+            this.props.toggleLoader();   
+        });   
     };
-
-    userItems = this.props.users.map(item => 
-        <UserItem name ={item.name} status= {item.status} city={item.city} followed={item.followed} userId = {item.id} followUser={this.props.followUser}/>
-    );
 
     pageClick = (item) => {
         this.props.changeCurrentPage(item);
-        axios.get(`http://localhost:3001/users?page=${item}`).then((users) => {
-            this.props.getUsers(users.data.users, users.data.pages);
+        // axios.get(`http://localhost:3001/users?page=${item}`).then((users) => {
+        //     this.props.getUsers(users.data.users, users.data.pages);
+        // });
+        this.props.toggleLoader();  
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${item}`).then((users) => {
+            let pages = Math.ceil(users.data.totalCount / 1000)
+            this.props.getUsers(users.data.items, pages);
+            this.props.toggleLoader();
         });
     }
         
@@ -54,17 +63,25 @@ class Users extends React.Component {
         for(let i=1; i<=this.props.totalPages;i++) {
             pages.push(i);
         }
+
         return(
-            <div>
-                <div className="pagination">
-                   {pages.map(item => {
-                       return <span onClick={() => this.pageClick(item)} className={this.props.currentPage === item && "active-page"}>{item}</span>
-                   })}
-                </div>
-                {this.props.users.map(item => {
-                    return <UserItem name ={item.name} status= {item.status} city={item.city} followed={item.followed} userId = {item.id} followUser={this.props.followUser}/>
-                })}
-            </div>
+            <>         
+                {this.props.isFetching ? 
+                <div className="loader">
+                    <img src={loader}/>
+                </div> :   
+                <div>
+                    <div className="pagination">
+                    {pages.map(item => {
+                        return <span onClick={() => this.pageClick(item)} className={this.props.currentPage === item && "active-page"}>{item}</span>
+                    })}
+                    </div>
+                    {this.props.users.map(item => {
+                        return <UserItem name ={item.name} status= {item.status} city={item.city} followed={item.followed} userId = {item.id} followUser={this.props.followUser}/>
+                    })}
+                </div>}
+               
+            </>
         )
     };
 }
