@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import Header from './components/Header/Header';
+import HeaderComponent from './components/Header/HeaderComponent';
 import Nav from './components/Nav/Nav';
 import Content from './components/Profile/Content';
 import Users from './components/Users/Users'
@@ -15,7 +15,7 @@ function App(props) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
-        <Header/>
+        <HeaderComponent/>
         <Nav/>       
         <div className="content">
           <Route path="/profile/:userId">
