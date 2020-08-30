@@ -5,7 +5,9 @@ import loader from './../../assets/loader.svg'
 import { NavLink } from 'react-router-dom'
 import userIcon from './../../assets/userIcon.jpg';
 function UserItem(props) {
-    let buttonText = props.followed == true ? "Unfollow" : "Follow"
+    let buttonText = props.followed == true ? "Unfollow" : "Follow";
+
+
     return (
         <div className="userItem">
             <div className="userAvatar">
@@ -14,7 +16,7 @@ function UserItem(props) {
                     </img>
                 </NavLink>
                
-                <button className="btn" onClick={() =>{props.followUser(props.id)}}>{buttonText}</button>
+                <button className="btn" onClick={() =>{props.followUser(props)}}>{buttonText}</button>
             </div>
             <div className="userInfo">
                 <div className="userFio">
@@ -40,7 +42,7 @@ class Users extends React.Component {
         //     this.props.getUsers(users.data.users, users.data.pages);
         // });  
         this.props.toggleLoader();   
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`).then((users) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`, {withCredentials: true}).then((users) => {
             let pages = Math.ceil(users.data.totalCount / 1000)
             this.props.getUsers(users.data.items, pages);
             this.props.toggleLoader();   
@@ -53,7 +55,7 @@ class Users extends React.Component {
         //     this.props.getUsers(users.data.users, users.data.pages);
         // });
         this.props.toggleLoader();  
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${item}`).then((users) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${item}`, {withCredentials: true}).then((users) => {
             let pages = Math.ceil(users.data.totalCount / 1000)
             this.props.getUsers(users.data.items, pages);
             this.props.toggleLoader();
@@ -63,6 +65,34 @@ class Users extends React.Component {
     componentDidMount() {
         this.getUsers();
     };
+
+    onUserFollow(userInfo) {
+        if (userInfo.followed) {
+            
+            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userInfo.id}`, {
+                withCredentials: true,
+                headers: {'api-key': '258a4411-02c2-4578-b017-2e6fabf18ad7'}
+            }).then((response) => {
+                if (response.data.resultCode === 0) {
+                    this.props.followUser(userInfo.id);
+                }
+            });   
+            
+        } else {
+            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userInfo.id}`, null, {
+                withCredentials: true,
+                headers: {'api-key': '258a4411-02c2-4578-b017-2e6fabf18ad7'}
+            }).then((response) => {
+                if (response.data.resultCode === 0) {
+                    this.props.followUser(userInfo.id);
+                }
+                
+            });           
+        }
+        
+        
+    };
+
     render() {
         let pages = []
         for(let i=1; i<=this.props.totalPages;i++) {
@@ -82,7 +112,7 @@ class Users extends React.Component {
                     })}
                     </div>
                     {this.props.users.map(item => {
-                        return <UserItem {...item} followUser={this.props.followUser}/>
+                        return <UserItem {...item} followUser={this.onUserFollow.bind(this)}/>
                     })}
                 </div>}
                
