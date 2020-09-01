@@ -4,6 +4,8 @@ import axios from 'axios'
 import loader from './../../assets/loader.svg'
 import { NavLink } from 'react-router-dom'
 import userIcon from './../../assets/userIcon.jpg';
+import {usersApi} from './../../api/api';
+
 function UserItem(props) {
     let buttonText = props.followed == true ? "Unfollow" : "Follow";
 
@@ -38,11 +40,8 @@ class Users extends React.Component {
         
     }
     getUsers = () => {
-        // axios.get(`http://localhost:3001/users?page=${this.props.currentPage}`).then((users) => {
-        //     this.props.getUsers(users.data.users, users.data.pages);
-        // });  
         this.props.toggleLoader();   
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`, {withCredentials: true}).then((users) => {
+        usersApi.getUsers(this.props.currentPage).then((users) => {
             let pages = Math.ceil(users.data.totalCount / 1000)
             this.props.getUsers(users.data.items, pages);
             this.props.toggleLoader();   
@@ -51,11 +50,8 @@ class Users extends React.Component {
 
     pageClick = (item) => {
         this.props.changeCurrentPage(item);
-        // axios.get(`http://localhost:3001/users?page=${item}`).then((users) => {
-        //     this.props.getUsers(users.data.users, users.data.pages);
-        // });
         this.props.toggleLoader();  
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${item}`, {withCredentials: true}).then((users) => {
+        usersApi.getUsers(item).then((users) => {
             let pages = Math.ceil(users.data.totalCount / 1000)
             this.props.getUsers(users.data.items, pages);
             this.props.toggleLoader();
@@ -67,22 +63,15 @@ class Users extends React.Component {
     };
 
     onUserFollow(userInfo) {
-        if (userInfo.followed) {
-            
-            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userInfo.id}`, {
-                withCredentials: true,
-                headers: {'api-key': '258a4411-02c2-4578-b017-2e6fabf18ad7'}
-            }).then((response) => {
+        if (userInfo.followed) { 
+            usersApi.unfollowUser(userInfo.id).then((response) => {
                 if (response.data.resultCode === 0) {
                     this.props.followUser(userInfo.id);
                 }
             });   
             
         } else {
-            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userInfo.id}`, null, {
-                withCredentials: true,
-                headers: {'api-key': '258a4411-02c2-4578-b017-2e6fabf18ad7'}
-            }).then((response) => {
+            usersApi.followUser(userInfo.id).then((response) => {
                 if (response.data.resultCode === 0) {
                     this.props.followUser(userInfo.id);
                 }
