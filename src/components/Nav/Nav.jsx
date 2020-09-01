@@ -1,11 +1,11 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import './Nav.css'
-function Nav() {
+function Nav(props) {
     return(
         <nav className="nav">
         <div className="menuItem">
-          <NavLink to="/profile">Profile</NavLink>      
+          <NavLink to={`/profile/${props.currentUserId}`}>Profile</NavLink>      
         </div>
         <div className="menuItem">
           <NavLink to="/messages">Messages</NavLink>         

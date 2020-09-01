@@ -55,3 +55,10 @@
 .loader{
     text-align: center;
 }
+.btn{
+    cursor: pointer;
+}
+.btn:disabled {
+    background-color: lightgray;
+    cursor: default
+}

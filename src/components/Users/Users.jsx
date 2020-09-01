@@ -8,8 +8,6 @@ import {usersApi} from './../../api/api';
 
 function UserItem(props) {
     let buttonText = props.followed == true ? "Unfollow" : "Follow";
-
-
     return (
         <div className="userItem">
             <div className="userAvatar">
@@ -18,7 +16,7 @@ function UserItem(props) {
                     </img>
                 </NavLink>
                
-                <button className="btn" onClick={() =>{props.followUser(props)}}>{buttonText}</button>
+                <button className="btn" onClick={(e) =>{props.followUser(e, props)}} disabled = {props.followButtonDisabled}>{buttonText}</button>
             </div>
             <div className="userInfo">
                 <div className="userFio">
@@ -62,12 +60,15 @@ class Users extends React.Component {
         this.getUsers();
     };
 
-    onUserFollow(userInfo) {
+    onUserFollow(event, userInfo) {
+        let btn = event.target;
+        btn.disabled = true;
         if (userInfo.followed) { 
             usersApi.unfollowUser(userInfo.id).then((response) => {
                 if (response.data.resultCode === 0) {
-                    this.props.followUser(userInfo.id);
+                    this.props.followUser(userInfo.id);                  
                 }
+                btn.disabled = false;
             });   
             
         } else {
@@ -75,11 +76,9 @@ class Users extends React.Component {
                 if (response.data.resultCode === 0) {
                     this.props.followUser(userInfo.id);
                 }
-                
+                btn.disabled = false;
             });           
-        }
-        
-        
+        }    
     };
 
     render() {
@@ -101,7 +100,7 @@ class Users extends React.Component {
                     })}
                     </div>
                     {this.props.users.map(item => {
-                        return <UserItem {...item} followUser={this.onUserFollow.bind(this)}/>
+                        return <UserItem {...item} followUser={this.onUserFollow.bind(this)} followButtonDisabled={this.props.followButtonDisabled}/>
                     })}
                 </div>}
                

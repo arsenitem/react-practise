@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
 import HeaderComponent from './components/Header/HeaderComponent';
-import Nav from './components/Nav/Nav';
 import Content from './components/Profile/Content';
 import Users from './components/Users/Users'
 import News from './components/News/News'
@@ -10,13 +9,14 @@ import {Route, BrowserRouter} from 'react-router-dom';
 import './App.css';
 import MessagesContainer from './components/Messages/MessagesContainer';
 import UsersContainer from './components/Users/UsersContainer';
+import NavContainer from './components/Nav/NavContainer';
 
 function App(props) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <HeaderComponent/>
-        <Nav/>       
+        <NavContainer/>       
         <div className="content">
           <Route path="/profile/:userId">
             <Content/>
